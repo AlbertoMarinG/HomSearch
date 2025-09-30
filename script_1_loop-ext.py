@@ -40,6 +40,11 @@ neg_noep2 = datadir + "RAD21_HiC/BR2/neg_no_30.hic"
 neg_ep2 = datadir + "RAD21_HiC/BR2/neg_ep_30.hic"
 r21_noep2 = datadir + "RAD21_HiC/BR2/rad_no_30.hic"
 r21_ep2 = datadir + "RAD21_HiC/BR2/rad_ep_30.hic"
+# Paths to Hi-C data, RAD21-AID. Merged replicates
+hic_noaux_noep = datadir + "RAD21-AID/1_Hi-C/HiC_NoEP_NoAux_merged.hic"
+hic_noaux_ep = datadir + "RAD21-AID/1_Hi-C/HiC_EP_NoAux_merged.hic"
+hic_aux_noep = datadir + "RAD21-AID/1_Hi-C/HiC_NoEP_Aux_merged.hic"
+hic_aux_ep = datadir + "RAD21-AID/1_Hi-C/HiC_EP_Aux_merged.hic"
 # Paths to cohesin ChIP-Seq data, Rep-1
 chp_r21_noep1 = chipsdir + "BR1/Rad21_NoEP_hg38_final.bam"
 chp_r21_ep1 = chipsdir + "BR1/Rad21_EP_hg38_final.bam"
@@ -96,6 +101,17 @@ out_loops_r21_2 = datadir + "RAD21_HiC/BR2/out_mtrx_NoEPvsCas9_5kres_1_5Mbw_100-
 mat_loops_r21_2 = hic.get_mean_HiC_ratio(targets_hic, jcr_path, datadir, r21_noep2, r21_ep2, res_LE, width, obs='oe', norm='KR')
 pd.DataFrame(mat_loops_r21_2).to_csv(out_loops_r21_2 + ".csv", header=None, index=False)
 hic.plot_LE_matrix(mat_loops_r21_2, out_loops_r21_2, "EP 3h", "NoEP RAD21 siRNA", (width/1e6))
+""" Loop plots for RAD21-AID experiments """
+# No-Auxin
+out_loops_noaux = datadir + "RAD21-AID/1_Hi-C/out_mtrx_NoEPvsCas9_noaux"
+mat_loops_noaux = hic.get_mean_HiC_ratio(targets_hic, jcr_path, datadir, hic_noaux_noep, hic_noaux_ep, res_LE, width, obs='oe', norm='KR')
+pd.DataFrame(mat_loops_noaux).to_csv(out_loops_noaux + ".csv", header=None, index=False)
+hic.plot_LE_matrix(mat_loops_noaux, out_loops_noaux, "EP 3h", "RAD21 NoAuxin", (width/1e6))
+# Auxin
+out_loops_aux = datadir + "RAD21-AID/1_Hi-C/out_mtrx_NoEPvsCas9_aux"
+mat_loops_aux = hic.get_mean_HiC_ratio(targets_hic, jcr_path, datadir, hic_aux_noep, hic_aux_ep, res_LE, width, obs='oe', norm='KR')
+pd.DataFrame(mat_loops_aux).to_csv(out_loops_aux + ".csv", header=None, index=False)
+hic.plot_LE_matrix(mat_loops_aux, out_loops_aux, "EP 3h", "RAD21 Auxin", (width/1e6))
 """ Plot cohesin profiles """
 # Biological replicate-1
 nc.peak_profile_wide(nc.target_gen(alnpath, hg38, 1500000, AluGG), hg38, chp_r21_noep1, profsdir + "RAD21_1_5Mb_NoEP_BR1", span_rad=1500000, res=5000, wind_rad=10000)

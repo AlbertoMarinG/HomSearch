@@ -64,24 +64,10 @@ hic_3hli_g12 = datadir + "HiC_Cell_Cycle/1_G1/BR2/HiC_3hLight_30.hic"
 hic_noli_g22 = datadir + "HiC_Cell_Cycle/2_G2/BR2/HiC_NoLight.hic"
 hic_3hli_g22 = datadir + "HiC_Cell_Cycle/2_G2/BR2/HiC_3hLight.hic"
 # Paths to Hi-C drugs
-hic_noep_pkc1 = datadir + "HiC_Drugs/DNA-Pkcsi/BR1/inter_NoEP_30.hic"
-hic_cas9_pkc1 = datadir + "HiC_Drugs/DNA-Pkcsi/BR1/inter_AluGG_30.hic"
-hic_noep_pkc2 = datadir + "HiC_Drugs/DNA-Pkcsi/BR2/inter_NoEP_30.hic"
-hic_cas9_pkc2 = datadir + "HiC_Drugs/DNA-Pkcsi/BR2/inter_AluGG_30.hic"
 hic_noep_mir1 = datadir + "HiC_Drugs/Mirin/BR1/inter_NoEP.hic"
 hic_cas9_mir1 = datadir + "HiC_Drugs/Mirin/BR1/inter_AluGG.hic"
 hic_noep_mir2 = datadir + "HiC_Drugs/Mirin/BR2/inter_NoEP_30.hic"
 hic_cas9_mir2 = datadir + "HiC_Drugs/Mirin/BR2/inter_AluGG_30.hic"
-# Paths to inscore, DNA-Pkcs
-is_pk_no1 = datadir + "HiC_Drugs/DNA-Pkcsi/BR1/inscore_noep.dat"
-is_pk_ep1 = datadir + "HiC_Drugs/DNA-Pkcsi/BR1/inscore_ep.dat"
-is_pk_no2 = datadir + "HiC_Drugs/DNA-Pkcsi/BR2/inscore_noep.dat"
-is_pk_ep2 = datadir + "HiC_Drugs/DNA-Pkcsi/BR2/inscore_ep.dat"
-# Paths to inscore outputs, DNA-Pkcs
-outis_pk_no_b1 = datadir + "HiC_Drugs/DNA-Pkcsi/BR1/On-tgt_InsScore_noep_b1"
-outis_pk_ep_b1 = datadir + "HiC_Drugs/DNA-Pkcsi/BR1/On-tgt_InsScore_ep_b1"
-outis_pk_no_b2 = datadir + "HiC_Drugs/DNA-Pkcsi/BR2/On-tgt_InsScore_noep_b2"
-outis_pk_ep_b2 = datadir + "HiC_Drugs/DNA-Pkcsi/BR2/On-tgt_InsScore_ep_b2"
 # Paths to inscore, Mirin
 is_mir_no1 = datadir + "HiC_Drugs/Mirin/BR1/inscore_noep.dat"
 is_mir_ep1 = datadir + "HiC_Drugs/Mirin/BR1/inscore_ep.dat"
@@ -126,17 +112,7 @@ hic.is_profiles(nc.target_gen(alnpath, hg38, 1, AluGG), is_ep1, outis_ep_b1, res
 hic.is_profiles(nc.target_gen(alnpath, hg38, 1, AluGG), is_no2, outis_no_b2, res = 25, span=20)
 hic.is_profiles(nc.target_gen(alnpath, hg38, 1, AluGG), is_ep2, outis_ep_b2, res = 25, span=20) """
 """ Drugs Hi-C, Loop extrusion plots 
-targets_gen = hic.read_tgts_peaks(file_MRE, hg38, res_LE, width, max_cter=100, mrg_tgts=0)
-# DNA-Pkcs, Rep-1
-out_csv_rats_mre_pks1 = datadir + "HiC_Drugs/DNA-Pkcsi/BR1/out_mtrx_NoEPvsCas9_5kres_1_5Mbw_100-mre"
-mat_pks1 = hic.get_mean_HiC_ratio(targets_gen, jcr_path, datadir, hic_noep_pkc1, hic_cas9_pkc1, res_LE, width, obs='oe', norm='KR')
-pd.DataFrame(mat_pks1).to_csv(out_csv_rats_mre_pks1 + ".csv", header=None, index=False)
-hic.plot_LE_matrix(mat_pks1, out_csv_rats_mre_pks1, "3h EP", "No EP", (width/1e6))
-# DNA-Pkcs, Rep-2
-out_csv_rats_mre_pks2 = datadir + "HiC_Drugs/DNA-Pkcsi/BR2/out_mtrx_NoEPvsCas9_5kres_1_5Mbw_100-mre"
-mat_pks2 = hic.get_mean_HiC_ratio(targets_gen, jcr_path, datadir, hic_noep_pkc2, hic_cas9_pkc2, res_LE, width, obs='oe', norm='KR')
-pd.DataFrame(mat_pks2).to_csv(out_csv_rats_mre_pks2 + ".csv", header=None, index=False)
-hic.plot_LE_matrix(mat_pks2, out_csv_rats_mre_pks2, "3h EP", "No EP", (width/1e6))"""
+targets_gen = hic.read_tgts_peaks(file_MRE, hg38, res_LE, width, max_cter=100, mrg_tgts=0) """
 """
 # Mirin, Rep-1
 out_csv_rats_mre_mir1 = datadir + "HiC_Drugs/Mirin/BR1/out_mtrx_NoEPvsCas9_5kres_1_5Mbw_100-mre"
@@ -149,16 +125,6 @@ mat_mir2 = hic.get_mean_HiC_ratio(targets_gen, jcr_path, datadir, hic_noep_mir2,
 pd.DataFrame(mat_mir2).to_csv(out_csv_rats_mre_mir2 + ".csv", header=None, index=False)
 hic.plot_LE_matrix(mat_mir2, out_csv_rats_mre_mir2, "3h EP", "No EP", (width/1e6)) """
 """ Drugs Hi-C, Insulation Scores
-# DNA-Pkcs
-hic.per_site_is(nc.target_gen(alnpath, hg38, 1, AluGG), is_pk_no1, outis_pk_no_b1, span=1)
-hic.per_site_is(nc.target_gen(alnpath, hg38, 1, AluGG), is_pk_ep1, outis_pk_ep_b1, span=1)
-hic.per_site_is(nc.target_gen(alnpath, hg38, 1, AluGG), is_pk_no2, outis_pk_no_b2, span=1)
-hic.per_site_is(nc.target_gen(alnpath, hg38, 1, AluGG), is_pk_ep2, outis_pk_ep_b2, span=1)
-# Insulation Score profiles
-hic.is_profiles(nc.target_gen(alnpath, hg38, 1, AluGG), is_pk_no1, outis_pk_no_b1, res = 25, span=20)
-hic.is_profiles(nc.target_gen(alnpath, hg38, 1, AluGG), is_pk_ep1, outis_pk_ep_b1, res = 25, span=20)
-hic.is_profiles(nc.target_gen(alnpath, hg38, 1, AluGG), is_pk_no2, outis_pk_no_b2, res = 25, span=20)
-hic.is_profiles(nc.target_gen(alnpath, hg38, 1, AluGG), is_pk_ep2, outis_pk_ep_b2, res = 25, span=20)
 # Insulation Score profiles
 # Mirin
 hic.per_site_is(nc.target_gen(alnpath, hg38, 1, AluGG), is_mir_no1, outis_mir_no_b1, span=1)
